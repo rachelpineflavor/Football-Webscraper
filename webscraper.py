@@ -3,6 +3,8 @@ import requests
 
 from twilio.rest import Client
 
+from TwilioCredentials import twilioLogin, twilioNumbers
+
 url = 'https://www.cbssports.com/nfl/teams/ATL/atlanta-falcons/schedule/regular/'
 response = requests.get(url)
 content = BeautifulSoup(response.content, 'html.parser')
@@ -48,9 +50,9 @@ allTogether = 'The next Falcons game is ' + opposing_team[2] + ', ' + game_locat
         game_date[1] + ' ' + 'at ' + start_time[3] + '. ' + 'Watch the game on ' + game_channel[4] + '.'
 print(allTogether)
 
-accountSID = 'AC82d079d1a2e13ad4def8b61dde8c6ed6'
-authToken = '665bad11a07c96bd50b644e45205895c'
+accountSID = twilioLogin['accountSID']
+authToken = twilioLogin['authToken']
 client = Client(accountSID, authToken)
-myTwilioNumber = '+16466817321'
-destCellPhone = '+15127409869'
+myTwilioNumber = twilioNumbers['myTwilioNumber']
+destCellPhone = twilioNumbers['destCellPhone']
 myMessage = client.messages.create(body = allTogether, from_=myTwilioNumber, to=destCellPhone)
