@@ -1,7 +1,8 @@
 from celery import Celery 
+from webscraper import main
 
-app = Celery('webscraper', broker='pyamqp://localhost//')
+app = Celery('webscraper', backend='rpc://', broker='pyamqp://guest@localhost//')
 
 @app.task
-def game_text(myMessage):
-    print(myMessage)
+def game_text():
+    main()
